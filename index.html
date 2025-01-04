@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic File Links</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <h1>Dynamic File Links</h1>
+    <ul id="file-list"></ul>
+
+    <script>
+        // Path to your JSON file
+        const jsonFilePath = "files.json";
+
+        // Function to fetch and process the JSON file
+        fetch(jsonFilePath)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Select the list element
+                const fileList = document.getElementById("file-list");
+
+                // Loop through the JSON array and create list items with links
+                data.reverse().forEach(file => {
+                    const listItem = document.createElement("li");
+                    const link = document.createElement("a");
+
+                    link.href = "./newman/"+file;
+                    link.textContent = file.substring(0, file.length - 7);
+                    link.target = "_blank"; // Open links in a new tab
+
+                    listItem.appendChild(link);
+                    fileList.appendChild(listItem);
+                });
+            })
+            .catch(error => {
+                console.error("Error fetching or processing the JSON file:", error);
+            });
+    </script>
+</body>
+</html>
