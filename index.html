@@ -29,7 +29,7 @@
                 const fileList = document.getElementById("file-list");
 
                 // Loop through the JSON array and create list items with links
-                data.reverse().forEach(file => {
+                data.reverse().slice(0, 9).forEach(file => {
                     const listItem = document.createElement("li");
                     const link = document.createElement("a");
 
